@@ -1,2 +1,2 @@
-# template
-This is a template repository
+# gatus-client
+This is a client for Gatus.io
