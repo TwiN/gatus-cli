@@ -1,6 +1,12 @@
 package cmd
 
 import (
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"strconv"
+
 	"github.com/TwiN/gatus-client/config"
 	"github.com/spf13/cobra"
 )
@@ -13,16 +19,42 @@ var statusPageCmd = &cobra.Command{
 }
 
 var statusPageGetCmd = &cobra.Command{
-	Use:   "get",
-	Short: "Retrieve a status page",
-	Run: func(cmd *cobra.Command, args []string) {
+	Use:     "get",
+	Short:   "Retrieve a status page",
+	Example: `  gatus-client status-page get --id 12345`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		statusPageID, _ := cmd.Flags().GetInt("id")
+		if statusPageID == 0 {
+			return errors.New("missing flag --id")
+		}
 		apiKey := config.GetAPIKey()
-		_ = apiKey
-		// TODO: Send a request to https://gatus.io/api/v1/external/status-pages/{id}
+		request, err := http.NewRequest("GET", "https://gatus.io/api/v1/external/status-pages/"+strconv.Itoa(statusPageID), nil)
+		if err != nil {
+			return err
+		}
+		request.Header.Set("Authorization", "Bearer "+apiKey)
+		response, err := http.DefaultClient.Do(request)
+		if err != nil {
+			return err
+		}
+		body, err := io.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
+		if response.StatusCode != http.StatusOK {
+			// Return the error message as a string
+			return errors.New(string(body))
+		}
+		// Else, print the body and return no error
+		fmt.Printf(string(body))
+		return nil
 	},
 }
 
 func init() {
+	rootCmd.SilenceUsage = true
+	rootCmd.SilenceErrors = true
 	rootCmd.AddCommand(statusPageCmd)
+	statusPageGetCmd.Flags().IntP("id", "i", 0, "ID of the status page")
 	statusPageCmd.AddCommand(statusPageGetCmd)
 }
