@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gatus-client",
+	Use:   "gatus-cli",
 	Short: "CLI tool to interact with Gatus.io",
 }
 

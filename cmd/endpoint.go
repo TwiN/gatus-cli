@@ -54,7 +54,7 @@ var endpointStatusCmd = &cobra.Command{
 var endpointStatusAllCmd = &cobra.Command{
 	Use:     "all",
 	Short:   "Get status of all endpoints",
-	Example: `  gatus-client endpoint status all --url https://status.example.com`,
+	Example: `  gatus-cli endpoint status all --url https://status.example.com`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		gatusClient := gatussdk.NewClient(url)
@@ -77,8 +77,8 @@ var endpointStatusAllCmd = &cobra.Command{
 var endpointStatusGetCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get status of a specific endpoint by key or by group and name",
-	Example: `  gatus-client endpoint status get --url https://status.example.com --key "group_endpoint"
-  gatus-client endpoint status get --url https://status.example.com --group "web" --name "frontend"`,
+	Example: `  gatus-cli endpoint status get --url https://status.example.com --key "group_endpoint"
+  gatus-cli endpoint status get --url https://status.example.com --group "web" --name "frontend"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
@@ -120,7 +120,7 @@ var endpointStatusGetCmd = &cobra.Command{
 var endpointUptimeCmd = &cobra.Command{
 	Use:     "uptime",
 	Short:   "Get uptime information for an endpoint",
-	Example: `  gatus-client endpoint uptime --url https://status.example.com --key "group_endpoint" --duration "7d"`,
+	Example: `  gatus-cli endpoint uptime --url https://status.example.com --key "group_endpoint" --duration "7d"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
@@ -148,7 +148,7 @@ var endpointUptimeCmd = &cobra.Command{
 var endpointResponseTimesCmd = &cobra.Command{
 	Use:     "response-times",
 	Short:   "Get response times for an endpoint",
-	Example: `  gatus-client endpoint response-times --url https://status.example.com --key "group_endpoint" --duration "24h"`,
+	Example: `  gatus-cli endpoint response-times --url https://status.example.com --key "group_endpoint" --duration "24h"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
@@ -186,7 +186,7 @@ var badgeCmd = &cobra.Command{
 var badgeHealthCmd = &cobra.Command{
 	Use:     "health",
 	Short:   "Generate health badge URL",
-	Example: `  gatus-client endpoint badge health --url https://status.example.com --key "group_endpoint"`,
+	Example: `  gatus-cli endpoint badge health --url https://status.example.com --key "group_endpoint"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
@@ -204,7 +204,7 @@ var badgeHealthCmd = &cobra.Command{
 var badgeUptimeCmd = &cobra.Command{
 	Use:     "uptime",
 	Short:   "Generate uptime badge URL",
-	Example: `  gatus-client endpoint badge uptime --url https://status.example.com --key "group_endpoint" --duration "7d"`,
+	Example: `  gatus-cli endpoint badge uptime --url https://status.example.com --key "group_endpoint" --duration "7d"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
@@ -228,7 +228,7 @@ var badgeUptimeCmd = &cobra.Command{
 var badgeResponseTimeCmd = &cobra.Command{
 	Use:     "response-time",
 	Short:   "Generate response time badge URL",
-	Example: `  gatus-client endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"`,
+	Example: `  gatus-cli endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")

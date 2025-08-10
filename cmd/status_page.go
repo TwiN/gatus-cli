@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/TwiN/gatus-client/config"
+	"github.com/TwiN/gatus-cli/config"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +21,7 @@ var statusPageCmd = &cobra.Command{
 var statusPageGetCmd = &cobra.Command{
 	Use:     "get",
 	Short:   "Retrieve a status page",
-	Example: `  gatus-client status-page get --status-page-id 12345`,
+	Example: `  gatus-cli status-page get --status-page-id 12345`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		statusPageID, _ := cmd.Flags().GetInt("status-page-id")
 		if statusPageID == 0 {

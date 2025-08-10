@@ -1,6 +1,6 @@
 package main
 
-import "github.com/TwiN/gatus-client/cmd"
+import "github.com/TwiN/gatus-cli/cmd"
 
 func main() {
 	cmd.Execute()

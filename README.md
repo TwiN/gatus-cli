@@ -1,5 +1,5 @@
-# gatus-client
-This is a client for interacting with deployed Gatus status pages as well as Gatus.io
+# gatus-cli
+This is a CLI tool for interacting with deployed Gatus status pages as well as Gatus.io
 
 ## Usage
 > **NOTE:** If you're looking to interact with Gatus programmatically, see [TwiN/gatus-sdk](https://github.com/TwiN/gatus-sdk)
@@ -7,12 +7,12 @@ This is a client for interacting with deployed Gatus status pages as well as Gat
 ### Status Pages (Gatus.io only)
 For Gatus.io hosted service, you need to set your API key:
 ```console
-export GATUS_CLIENT_API_KEY=your-api-key-here
+export GATUS_CLI_API_KEY=your-api-key-here
 ```
 
 ```console
 # Retrieve a status page by ID
-gatus-client status-page get --status-page-id 12345
+gatus-cli status-page get --status-page-id 12345
 ```
 
 ### Endpoints
@@ -21,37 +21,37 @@ All endpoint commands require the `--url` flag to specify your Gatus server URL.
 #### Get Endpoint Status
 ```console
 # Get status of all endpoints
-gatus-client endpoint status all --url https://status.example.com
+gatus-cli endpoint status all --url https://status.example.com
 
 # Get status by endpoint key
-gatus-client endpoint status get --url https://status.example.com --key "group_endpoint"
+gatus-cli endpoint status get --url https://status.example.com --key "group_endpoint"
 
 # Get status by group and name
-gatus-client endpoint status get --url https://status.example.com --group "web" --name "frontend"
+gatus-cli endpoint status get --url https://status.example.com --group "web" --name "frontend"
 ```
 
 #### Get Uptime Information
 ```console
 # Get uptime percentage for an endpoint
-gatus-client endpoint uptime --url https://status.example.com --key "group_endpoint" --duration "7d"
+gatus-cli endpoint uptime --url https://status.example.com --key "group_endpoint" --duration "7d"
 ```
 
 #### Get Response Times
 ```console
 # Get response time statistics
-gatus-client endpoint response-times --url https://status.example.com --key "group_endpoint" --duration "24h"
+gatus-cli endpoint response-times --url https://status.example.com --key "group_endpoint" --duration "24h"
 ```
 
 #### Generate Badge URLs
 ```console
 # Generate health badge URL
-gatus-client endpoint badge health --url https://status.example.com --key "group_endpoint"
+gatus-cli endpoint badge health --url https://status.example.com --key "group_endpoint"
 
 # Generate uptime badge URL
-gatus-client endpoint badge uptime --url https://status.example.com --key "group_endpoint" --duration "7d"
+gatus-cli endpoint badge uptime --url https://status.example.com --key "group_endpoint" --duration "7d"
 
 # Generate response time badge URL
-gatus-client endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"
+gatus-cli endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"
 ```
 
 ### Duration Format
