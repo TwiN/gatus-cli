@@ -19,7 +19,7 @@ clean:
 	rm -rf bin/
 
 .PHONY: compress
-compress: build
+build-and-compress: build
 	cd bin && for file in *; do zip "$${file}.zip" "$$file"; done
 
 .PHONY: checksums
