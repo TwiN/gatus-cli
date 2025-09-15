@@ -54,6 +54,21 @@ gatus-cli endpoint badge uptime --url https://status.example.com --key "group_en
 gatus-cli endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"
 ```
 
+### External Endpoints
+External endpoints allow push-based monitoring where external systems report their health status to Gatus.
+
+#### Push Result
+```console
+# Push a successful health check
+gatus-cli external-endpoint push --url https://status.example.com --key "group_endpoint" --token "secret-token" --success
+
+# Push a failed health check with error message
+gatus-cli external-endpoint push --url https://status.example.com --key "group_endpoint" --token "secret-token" --error "Connection timeout"
+
+# Push with duration
+gatus-cli external-endpoint push --url https://status.example.com --key "group_endpoint" --token "secret-token" --success --duration "2s"
+```
+
 ### Duration Format
 Duration values must be one of the following Gatus API supported formats:
 - `1h` - 1 hour
