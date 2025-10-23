@@ -54,6 +54,30 @@ gatus-cli endpoint badge uptime --url https://status.example.com --key "group_en
 gatus-cli endpoint badge response-time --url https://status.example.com --key "group_endpoint" --duration "24h"
 ```
 
+Duration values for badges must be one of the following:
+- `1h` - 1 hour
+- `24h` - 24 hours (1 day)
+- `7d` - 7 days (1 week)
+- `30d` - 30 days (1 month)
+
+### Suites
+Suites are collections of sequential endpoint checks. All suite commands require the `--url` flag to specify your Gatus server URL.
+
+#### Get Suite Status
+```console
+# Get status of all suites
+gatus-cli suite status all --url https://status.example.com
+
+# Get status by suite key
+gatus-cli suite status get --url https://status.example.com --key "_check-authentication"
+
+# Get status by group and name (group is optional)
+gatus-cli suite status get --url https://status.example.com --group "monitoring" --name "health-checks"
+
+# Get status by name only
+gatus-cli suite status get --url https://status.example.com --name "health-checks"
+```
+
 ### External Endpoints
 External endpoints allow push-based monitoring where external systems report their health status to Gatus.
 
@@ -68,10 +92,3 @@ gatus-cli external-endpoint push --url https://status.example.com --key "group_e
 # Push with duration
 gatus-cli external-endpoint push --url https://status.example.com --key "group_endpoint" --token "secret-token" --success --duration "2s"
 ```
-
-### Duration Format
-Duration values must be one of the following Gatus API supported formats:
-- `1h` - 1 hour
-- `24h` - 24 hours (1 day)
-- `7d` - 7 days (1 week)
-- `30d` - 30 days (1 month)
