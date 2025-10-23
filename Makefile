@@ -20,7 +20,7 @@ clean:
 
 .PHONY: compress
 build-and-compress: build
-	cd bin && for file in *; do zip "$${file}.zip" "$$file"; done
+	cd bin && for file in *; do zip -m "$${file}.zip" "$$file"; done
 
 .PHONY: checksums
 checksums: build
