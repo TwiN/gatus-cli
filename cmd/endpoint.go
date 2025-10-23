@@ -9,30 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// convertDuration converts Go duration format to Gatus API format
-func convertDuration(durationStr string) (string, error) {
-	// Valid Gatus durations: 1h, 24h, 7d, 30d
-	validDurations := map[string]bool{"1h": true, "24h": true, "7d": true, "30d": true}
-
-	if validDurations[durationStr] {
-		return durationStr, nil
-	}
-
-	// Map common durations to valid ones
-	mappings := map[string]string{
-		"1hour": "1h", "hour": "1h",
-		"1day": "24h", "day": "24h", "24hour": "24h",
-		"week": "7d", "7day": "7d", "7days": "7d",
-		"month": "30d", "30day": "30d", "30days": "30d",
-	}
-
-	if mapped, exists := mappings[durationStr]; exists {
-		return mapped, nil
-	}
-
-	return "", fmt.Errorf("invalid duration '%s'. Valid options: 1h, 24h, 7d, 30d", durationStr)
-}
-
 var endpointCmd = &cobra.Command{
 	Use:     "endpoint",
 	Short:   "Interact with endpoints",
@@ -124,22 +100,15 @@ var endpointUptimeCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
-		durationStr, _ := cmd.Flags().GetString("duration")
-		if key == "" || durationStr == "" {
+		duration, _ := cmd.Flags().GetString("duration")
+		if key == "" || duration == "" {
 			return fmt.Errorf("missing required flags --key and --duration")
 		}
-
-		gatusDuration, err := convertDuration(durationStr)
-		if err != nil {
-			return err
-		}
-
 		gatusClient := gatussdk.NewClient(url)
-		uptime, err := gatusClient.GetEndpointUptime(context.Background(), key, gatusDuration)
+		uptime, err := gatusClient.GetEndpointUptime(context.Background(), key, duration)
 		if err != nil {
 			return err
 		}
-
 		fmt.Printf("Uptime: %.2f%%\n", uptime*100)
 		return nil
 	},
@@ -152,27 +121,19 @@ var endpointResponseTimesCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
-		durationStr, _ := cmd.Flags().GetString("duration")
-		if key == "" || durationStr == "" {
+		duration, _ := cmd.Flags().GetString("duration")
+		if key == "" || duration == "" {
 			return fmt.Errorf("missing required flags --key and --duration")
 		}
-
-		gatusDuration, err := convertDuration(durationStr)
-		if err != nil {
-			return err
-		}
-
 		gatusClient := gatussdk.NewClient(url)
-		responseTimes, err := gatusClient.GetEndpointResponseTimes(context.Background(), key, gatusDuration)
+		responseTimes, err := gatusClient.GetEndpointResponseTimes(context.Background(), key, duration)
 		if err != nil {
 			return err
 		}
-
 		output, err := json.MarshalIndent(responseTimes, "", "  ")
 		if err != nil {
 			return err
 		}
-
 		fmt.Println(string(output))
 		return nil
 	},
@@ -208,18 +169,12 @@ var badgeUptimeCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
-		durationStr, _ := cmd.Flags().GetString("duration")
-		if key == "" || durationStr == "" {
+		duration, _ := cmd.Flags().GetString("duration")
+		if key == "" || duration == "" {
 			return fmt.Errorf("missing required flags --key and --duration")
 		}
-
-		gatusDuration, err := convertDuration(durationStr)
-		if err != nil {
-			return err
-		}
-
 		gatusClient := gatussdk.NewClient(url)
-		badgeURL := gatusClient.GetEndpointUptimeBadgeURL(key, gatusDuration)
+		badgeURL := gatusClient.GetEndpointUptimeBadgeURL(key, duration)
 		fmt.Println(badgeURL)
 		return nil
 	},
@@ -232,18 +187,12 @@ var badgeResponseTimeCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, _ := cmd.Parent().Parent().Flags().GetString("url")
 		key, _ := cmd.Flags().GetString("key")
-		durationStr, _ := cmd.Flags().GetString("duration")
-		if key == "" || durationStr == "" {
+		duration, _ := cmd.Flags().GetString("duration")
+		if key == "" || duration == "" {
 			return fmt.Errorf("missing required flags --key and --duration")
 		}
-
-		gatusDuration, err := convertDuration(durationStr)
-		if err != nil {
-			return err
-		}
-
 		gatusClient := gatussdk.NewClient(url)
-		badgeURL := gatusClient.GetEndpointResponseTimeBadgeURL(key, gatusDuration)
+		badgeURL := gatusClient.GetEndpointResponseTimeBadgeURL(key, duration)
 		fmt.Println(badgeURL)
 		return nil
 	},
