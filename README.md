@@ -1,6 +1,14 @@
 # gatus-cli
 This is a CLI tool for interacting with deployed Gatus status pages as well as Gatus.io
 
+## Installation
+You can download the executable for your platform using the [releases page](https://github.com/TwiN/gatus-cli/releases).
+
+Alternatively, if you have Go installed, you can install it via:
+```console
+go install github.com/TwiN/gatus-cli@latest
+```
+
 ## Usage
 > **NOTE:** If you're looking to interact with Gatus programmatically, see [TwiN/gatus-sdk](https://github.com/TwiN/gatus-sdk)
 
